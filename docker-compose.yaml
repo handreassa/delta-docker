@@ -1,0 +1,19 @@
+version: '3'
+services:
+  spark:
+    image: bitnami/spark:latest
+    container_name: spark
+    environment:
+      - SPARK_MODE=master
+    volumes:
+      - /path/on/host:/path/on/container
+    ports:
+      - "8080:8080"
+      - "7077:7077"
+  worker:
+    image: bitnami/spark:latest
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark:7077
+    volumes:
+      - /path/on/host:/path/on/container
