@@ -8,8 +8,6 @@ services:
       - INIT_DAEMON_STEP=setup_spark
     ports:
       - "8080:8080"
-    volumes:
-      - ./notebooks:/notebooks
     networks:
       - spark-network
 
@@ -17,13 +15,16 @@ services:
     build: .
     ports:
       - "8888:8888"
-    volumes:
-      - ./notebooks:/home/notebooks
     networks:
       - spark-network
+    volumes:
+      - ./local_lake:/home/jovyan/work
+      - ./notebooks:/home/jovyan/
     depends_on:
       - spark-master
     command: "start-notebook.sh --NotebookApp.token='' --NotebookApp.password=''"
 
 networks:
   spark-network:
+volumes:
+  myvol:
